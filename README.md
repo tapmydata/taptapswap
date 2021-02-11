@@ -1,6 +1,6 @@
 ## TAP TAP Swap
 
-This project provides an interface to swap from ![Stellar TAP](https://stellar.expert/explorer/public/asset/TAP-GBLDM2NKZ4Z4H67RZ3UQ2A5RNLFLLQNXGWRFHKGOL3QUALWYFWI4FIL4-1) to ![ERC20 TAP](https://etherscan.io/token/0x7f1f2d3dfa99678675ece1c243d3f7bc3746db5d) 
+This project provides an interface to swap from [Stellar TAP](https://stellar.expert/explorer/public/asset/TAP-GBLDM2NKZ4Z4H67RZ3UQ2A5RNLFLLQNXGWRFHKGOL3QUALWYFWI4FIL4-1) to [ERC20 TAP](https://etherscan.io/token/0x7f1f2d3dfa99678675ece1c243d3f7bc3746db5d) 
 
 Can be seen on https://swap.tapmydata.com
 
