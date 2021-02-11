@@ -96,6 +96,31 @@ contract("TapTapSwap", function ([ owner, other, other2, other3 ]) {
         expect((await this.tapTapSwap.hasClaimed(vrs.trans))).to.equal(false);
     });
 
+    it('hasClaimed returns true if trans is claimed', async function () {
+        var vrs = await sign(web3, owner, other, CLAIM_AMOUNT, STELLAR_TRANS, this.tapTapSwap.address);
+        await this.tapTapSwap.claim(vrs.amount, vrs.trans, vrs.v, vrs.r, vrs.s, {from: other});
+        expect((await this.tapTapSwap.hasClaimed(vrs.trans))).to.equal(true);
+    });
+    
+    it('can get base token', async function () {
+        expect((await this.tapTapSwap.getBaseToken())).to.equal(this.tapInstance.address);
+    });
+
+    it('can set base token if admin', async function () {
+        let newToken = '0x86B738d26D791C76411bd32935416a5A37078ABD';
+        await this.tapTapSwap.setBaseToken(newToken);
+        expect((await this.tapTapSwap.getBaseToken())).to.equal(newToken);
+    });
+
+    it('can NOT set base token if NOT admin', async function () {
+        let newToken = '0x86B738d26D791C76411bd32935416a5A37078ABD';
+        await expectRevert(
+            this.tapTapSwap.setBaseToken(newToken, {from: other}),
+            "Caller is not an admin"
+        );
+    });
+
+
     sign = async (web3, signer, ethAddress, amount, transaction, contract_address) => {
 
         var transBuffer = Buffer.from(transaction);

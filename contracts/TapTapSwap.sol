@@ -49,7 +49,9 @@ contract TapTapSwap is AccessControl {
         return claimed[trans];
     }
 
-    // Builds a prefixed hash to mimic the behavior of eth_sign.
+    /**
+     * @dev Builds a prefixed hash to mimic the behavior of eth_sign.
+     */
     function prefixed(bytes32 hash) internal pure returns (bytes32) {
         return keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", hash));
     }
@@ -57,5 +59,14 @@ contract TapTapSwap is AccessControl {
     function drain() external {
         require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
         require(baseToken.transfer(msg.sender, baseToken.balanceOf(address(this))));
+    }
+
+    function setBaseToken(ERC20 _baseToken) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Caller is not an admin");
+        baseToken = _baseToken;
+    }
+    
+    function getBaseToken() external view returns (ERC20) {
+        return baseToken;
     }
 }
