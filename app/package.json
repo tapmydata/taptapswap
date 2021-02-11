@@ -3,10 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@craco/craco": "^6.0.0",
-    "@drizzle/react-components": "^1.5.1",
-    "@drizzle/react-plugin": "^1.5.1",
-    "@drizzle/store": "^1.5.1",
     "@ethersproject/shims": "^5.0.10",
     "@ethersproject/units": "^5.0.8",
     "@myetherwallet/mewconnect-web-client": "^2.1.20-beta.1",
@@ -23,14 +19,11 @@
     "fortmatic": "^2.2.1",
     "fs-readfile-promise": "^3.0.1",
     "googleapis": "^39.2.0",
-    "popper.js": "1.15.0",
     "postcss": "^7.0.35",
-    "qr-scanner": "^1.2.0",
     "qrcode": "^1.4.4",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-scripts": "4.0.1",
-    "react-twitter-widgets": "^1.9.5",
     "stellar-sdk": "^7.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "truffle-hdwallet-provider": "^1.0.17",
@@ -59,6 +52,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^6.1.1",
     "@ethersproject/providers": "^5.0.17",
     "@web3-react/core": "^6.1.1",
     "@web3-react/injected-connector": "^6.0.7",
