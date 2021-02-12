@@ -45,7 +45,8 @@ exports.handler = async function(event, context) {
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ 
+      body: JSON.stringify({
+          kkack: web3.utils.keccak256('SIGNER_ROLE'),
           r: r,
           s: s,
           v: v,

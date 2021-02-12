@@ -30,7 +30,7 @@ module.exports = {
     },
     mainnet: {
       provider: () => new HDWalletProvider(process.env.MNEMONIC, process.env.INFURA_MAINNET),
-      gasPrice: 64000000000,
+      gasPrice: 125000000000,
       from: process.env.FROM,
       network_id: 1
     }

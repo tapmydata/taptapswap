@@ -43,7 +43,10 @@ exports.handler = async function(event, context) {
 
     const pair = StellarSdk.Keypair.random();
 
-    var s3 = new aws.S3();
+    var s3 = new aws.S3({
+        accessKeyId: process.env.TTS_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.TTS_AWS_SECRET_ACCESS_KEY,
+      });
 
     // See if we have existing for this ETH address
     const existing_stellar_address = await s3.headObject({
