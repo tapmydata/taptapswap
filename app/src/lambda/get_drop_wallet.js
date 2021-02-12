@@ -9,8 +9,11 @@ exports.handler = async function(event, context) {
 
         const account = await server.loadAccount(process.env.TAP_ASSET_DISTRIBUTOR);
         const fee = await server.fetchBaseFee();
-    
-        const transaction = new StellarSdk.TransactionBuilder(account, { fee, networkPassphrase: StellarSdk.Networks.TESTNET })
+        
+        var stellarNetworkPassphrase = process.env.REACT_APP_HORIZON_SERVER === 'https://horizon-testnet.stellar.org' ? 
+            StellarSdk.Networks.TESTNET : StellarSdk.Networks.PUBLIC;
+
+        const transaction = new StellarSdk.TransactionBuilder(account, { fee, networkPassphrase: stellarNetworkPassphrase })
             .addOperation(
                 // this operation funds the new account with XLM
                 StellarSdk.Operation.createAccount({
@@ -32,7 +35,6 @@ exports.handler = async function(event, context) {
         transaction.sign(pair)
         try {
             const transactionResult = await server.submitTransaction(transaction);
-            console.log(transactionResult);
         } catch (err) {
             console.error(err);
         }
