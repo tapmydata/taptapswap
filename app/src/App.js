@@ -94,7 +94,7 @@ class App extends Component {
 
   getStellarAddress = async (account) => {
 
-    let response = await (await fetch('/.netlify/functions/get_drop_wallet?ethaddress='+account)).json();
+    let response = await (await fetch(process.env.REACT_APP_GET_DROP_WALLET_ENDPOINT + '?ethaddress='+account)).json();
     let wallet = response.wallet;
     this.setState({addressGenerating: true, dropWallet: ''});
 
