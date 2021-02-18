@@ -20,6 +20,7 @@ class App extends Component {
     claimed: false,
     transaction: null,
     dropWallet: "",
+    dropWalletError: false,
     addressGenerating: false,
     incomingTrans: [],
     tapTapSwapContract: false,
@@ -96,39 +97,42 @@ class App extends Component {
 
     this.setState({addressGenerating: true, dropWallet: ''});
     let response = await (await fetch(process.env.REACT_APP_GET_DROP_WALLET_ENDPOINT + '?ethaddress='+account)).json();
-    let wallet = response.wallet;
+    let wallet = false;
+    if (response.wallet) {
+      wallet = response.wallet;
+      this.setState({addressGenerating: false, dropWallet: wallet});
 
-    let lastCursor=0;
+      let lastCursor=0;
 
-    let txHandler = async (txResponse) => {
-        let ops = await txResponse.operations();
-        
-        ops.records.forEach(function (item, index) {
-            if (item.type==="change_trust" && item.asset_code==="TAP") {
-              this.setState({addressGenerating: false, dropWallet: wallet});
-            } else {
-                if (item.asset_type==='credit_alphanum4' 
-                    && item.asset_code==='TAP' 
-                    && item.asset_issuer===process.env.REACT_APP_TAP_ASSET_ISSUER) {
-                      this.addIncomingTransaction(
-                            {
-                                amount: item.amount,
-                                transaction_hash: item.transaction_hash,
-                                date: new Date(item.created_at)
-                            }
-                        );
-                }
-            }
-        }, this);
-    };
+      let txHandler = async (txResponse) => {
+          let ops = await txResponse.operations();
+          
+          ops.records.forEach(function (item, index) {
+              if (item.asset_type==='credit_alphanum4' 
+                  && item.asset_code==='TAP' 
+                  && item.asset_issuer===process.env.REACT_APP_TAP_ASSET_ISSUER) {
+                    this.addIncomingTransaction(
+                          {
+                              amount: item.amount,
+                              transaction_hash: item.transaction_hash,
+                              date: new Date(item.created_at)
+                          }
+                      );
+              }
+          }, this);
+      };
 
-    const server = new StellarSdk.Server(process.env.REACT_APP_HORIZON_SERVER);
-    server.transactions()
-        .forAccount(wallet)
-        .cursor(lastCursor)
-        .stream({
-            onmessage: txHandler
-        });
+      const server = new StellarSdk.Server(process.env.REACT_APP_HORIZON_SERVER);
+      server.transactions()
+          .forAccount(wallet)
+          .cursor(lastCursor)
+          .stream({
+              onmessage: txHandler
+          });
+
+    } else {
+      this.setState({addressGenerating: false, dropWalletError: true});
+    }
   }
 
   addIncomingTransaction = async (trans) => {
@@ -229,7 +233,7 @@ class App extends Component {
                     {this.state.step===2 ? (<>👉</>) : (null)} Step 2. Send your Tapmydata Stellar TAP
                   </p>
                   <div className="mx-auto p-8 content-center text-center">
-                    <DropWallet addressGenerating={this.state.addressGenerating} address={this.state.dropWallet}></DropWallet>
+                    <DropWallet addressGenerating={this.state.addressGenerating} address={this.state.dropWallet} dropWalletError={this.state.dropWalletError}></DropWallet>
                   </div>
 
                   <p className="text-center text-base font-semibold uppercase text-gray-600 tracking-wider">

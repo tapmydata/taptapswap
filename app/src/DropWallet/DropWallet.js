@@ -44,6 +44,12 @@ export class DropWallet extends React.Component {
             </span>
         }
 
+        if(this.props.dropWalletError) {
+            alertMessage = <span className="text-xs font-semibold inline-block py-2 px-3 uppercase rounded-full text-white bg-red-600 uppercase last:mr-0 mr-1">
+                There was an error generating your drop wallet.<br/>Our tech team have been informed.
+            </span>
+        }
+
         return (
             <div className="content-center text-center">
             {this.props.address ? (
