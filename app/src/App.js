@@ -108,10 +108,11 @@ class App extends Component {
           let ops = await txResponse.operations();
           
           ops.records.forEach(function (item, index) {
-              if (item.asset_type==='credit_alphanum4' 
+              if (item.type === 'payment'
+                  && item.asset_type==='credit_alphanum4' 
                   && item.asset_code==='TAP' 
                   && item.asset_issuer===process.env.REACT_APP_TAP_ASSET_ISSUER) {
-                    this.addIncomingTransaction(
+                  this.addIncomingTransaction(
                           {
                               amount: item.amount,
                               transaction_hash: item.transaction_hash,
