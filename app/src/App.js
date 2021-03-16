@@ -223,31 +223,14 @@ class App extends Component {
 
                 <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-3">
                   
-                  <p className="text-center text-base font-semibold uppercase text-gray-600 tracking-wider">
-                    {this.state.step===1 ? (<>👉</>) : (null)} Step 1. Connect your wallet
-                  </p>
+                  
                   <div className="mx-auto p-8 content-center text-center">
-                    <ConnectEthWallet account={this.state.account} connected={(wallet) => this.walletConnected(wallet)} web3provider={this.state.provider} />
+                  <span className="animate-bounce text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-tap_blue bg-tap_lime_green uppercase last:mr-0 mr-1">
+                SWAP is currently offline while we investigate malicious activity.
+            </span>
                   </div>
 
-                  <p className="text-center text-base font-semibold uppercase text-gray-600 tracking-wider">
-                    {this.state.step===2 ? (<>👉</>) : (null)} Step 2. Send your Tapmydata Stellar TAP
-                  </p>
-                  <div className="mx-auto p-8 content-center text-center">
-                    <DropWallet addressGenerating={this.state.addressGenerating} address={this.state.dropWallet} dropWalletError={this.state.dropWalletError}></DropWallet>
-                  </div>
-
-                  <p className="text-center text-base font-semibold uppercase text-gray-600 tracking-wider">
-                    {this.state.step===3 ? (<>👉</>) : (null)} Step 3. Swap your Stellar TAP for ERC20 TAP
-                  </p>
-                  <div className="mx-auto p-8 content-center text-center">
-                    <SwapTap 
-                      addressGenerating={this.state.addressGenerating} 
-                      address={this.state.dropWallet} 
-                      claim={this.claim}
-                      transactions={this.state.incomingTrans}
-                      web3provider={this.state.provider} />
-                  </div>
+                  
                 </div>
               </div>
             
